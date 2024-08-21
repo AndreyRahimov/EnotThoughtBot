@@ -25,7 +25,7 @@ def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
 
     text = text[:finish]
 
-    return text, finish
+    return text, len(text)
 
 
 # Функция, формирующая словарь книги
