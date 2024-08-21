@@ -41,8 +41,6 @@ def prepare_book(path: str) -> None:
         book[page_num] = page
         page_num += 1
         position += page_len
-        if page_num > 2:
-            break
 
 
 # Вызов функции prepare_book для подготовки книги из текстового файла
