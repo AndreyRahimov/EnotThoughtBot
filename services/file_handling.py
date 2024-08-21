@@ -38,7 +38,6 @@ def prepare_book(path: str) -> None:
     while len(text) > position:
         page, page_len = _get_part_text(text, position, PAGE_SIZE)
         page = page.lstrip()
-        print(page)
         book[page_num] = page
         page_num += 1
         position += page_len
