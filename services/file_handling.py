@@ -12,18 +12,16 @@ def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
     punctuation_marks = ",.!:;?"
     finish = start + size
 
-    if len(text) > finish:
-        while text[finish] in punctuation_marks:
-            finish -= 1
+    if finish >= len(text):
+        text = text[start:]
+        return text, len(text)
 
-    text = text[start:finish]
-
-    for char in text[::-1]:
-        if char in punctuation_marks:
-            break
+    while text[finish] in punctuation_marks and finish > 0:
         finish -= 1
 
-    text = text[:finish]
+    text = text[start:finish]
+    while text[-1] not in punctuation_marks and text:
+        text = text[:-1]
 
     return text, len(text)
 
