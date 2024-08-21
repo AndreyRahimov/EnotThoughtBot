@@ -27,6 +27,9 @@ async def process_start_command(message: Message):
 # и отправлять пользователю сообщение со списком доступных команд в боте
 @router.message(Command(commands="help"))
 async def process_help_command(message: Message):
+    user = message.from_user.id
+    if user not in users_db:
+        users_db[message.from_user.id] = deepcopy(user_dict_template)
     await message.answer(LEXICON[message.text])
 
 
@@ -34,6 +37,9 @@ async def process_help_command(message: Message):
 # и отправлять пользователю первую страницу книги с кнопками пагинации
 @router.message(Command(commands="beginning"))
 async def process_beginning_command(message: Message):
+    user = message.from_user.id
+    if user not in users_db:
+        users_db[message.from_user.id] = deepcopy(user_dict_template)
     users_db[message.from_user.id]["page"] = 1
     text = book[users_db[message.from_user.id]["page"]]
     await message.answer(
@@ -51,6 +57,9 @@ async def process_beginning_command(message: Message):
 # остановился в процессе взаимодействия с ботом
 @router.message(Command(commands="continue"))
 async def process_continue_command(message: Message):
+    user = message.from_user.id
+    if user not in users_db:
+        users_db[message.from_user.id] = deepcopy(user_dict_template)
     text = book[users_db[message.from_user.id]["page"]]
     await message.answer(
         text=text,
@@ -67,6 +76,9 @@ async def process_continue_command(message: Message):
 # если они есть или сообщение о том, что закладок нет
 @router.message(Command(commands="bookmarks"))
 async def process_bookmarks_command(message: Message):
+    user = message.from_user.id
+    if user not in users_db:
+        users_db[message.from_user.id] = deepcopy(user_dict_template)
     if users_db[message.from_user.id]["bookmarks"]:
         await message.answer(
             text=LEXICON[message.text],
