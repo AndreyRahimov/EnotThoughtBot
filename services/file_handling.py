@@ -13,19 +13,17 @@ def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
     finish = start + size
 
     if len(text) > finish:
-        while text[finish][:1] in punctuation_marks:
+        while text[finish] in punctuation_marks:
             finish -= 1
 
     text = text[start:finish]
 
-    finish = len(text)
     for char in text[::-1]:
         if char in punctuation_marks:
             break
-        else:
-            finish -= 1
+        finish -= 1
 
-    text = text[0:finish]
+    text = text[:finish]
 
     return text, finish
 
@@ -40,10 +38,12 @@ def prepare_book(path: str) -> None:
     while len(text) > position:
         page, page_len = _get_part_text(text, position, PAGE_SIZE)
         page = page.lstrip()
+        print(page)
         book[page_num] = page
         page_num += 1
         position += page_len
-        text = text[page_len:]
+        if page_num > 2:
+            break
 
 
 # Вызов функции prepare_book для подготовки книги из текстового файла
