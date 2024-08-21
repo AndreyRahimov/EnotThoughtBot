@@ -36,11 +36,13 @@ def prepare_book(path: str) -> None:
         text = file.read()
 
     page_num = 1
-    while text:
-        page, page_len = _get_part_text(text, 0, PAGE_SIZE)
+    position = 0
+    while len(text) > position:
+        page, page_len = _get_part_text(text, position, PAGE_SIZE)
         page = page.lstrip()
         book[page_num] = page
         page_num += 1
+        position += page_len
         text = text[page_len:]
 
 
